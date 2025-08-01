@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>
+    {% if term %}Edit{% else %}Add{% endif %} Dictionary Term - {{ project.name }}
+  </title>
+</head>
+<body>
+  <h1>
+    {% if term %}Edit{% else %}Add{% endif %} Dictionary Term for "{{ project.name }}"
+  </h1>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">{% if term %}Save{% else %}Create{% endif %}</button>
+  </form>
+
+  <a href="{% url 'dictionary_list' project.id %}">← Back to dictionary</a>
+</body>
+</html>

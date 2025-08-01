@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dictionary - {{ project.name }}</title>
+</head>
+<body>
+  <h1>Dictionary for "{{ project.name }}"</h1>
+
+  <a href="{% url 'create_dictionary_term' project.id %}">+ Add new term</a>
+  <ul>
+    {% for term in terms %}
+      <li>
+        <strong>{{ term.term }}</strong> — {{ term.meaning }}
+        {% if term.synonyms %}
+          (Synonyms: {{ term.synonyms }})
+        {% endif %}
+        — <a href="{% url 'edit_dictionary_term' project.id term.id %}">Edit</a>
+      </li>
+    {% empty %}
+      <li>No dictionary terms defined.</li>
+    {% endfor %}
+  </ul>
+
+  <a href="{% url 'project_detail' project.id %}">← Back to project</a>
+</body>
+</html>
