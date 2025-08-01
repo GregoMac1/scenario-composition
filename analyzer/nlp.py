@@ -31,7 +31,7 @@ def replace_lemmas_with_matcher(text, replacements):
 
     return " ".join(replaced)
 
-def analyze_episodes(text: str, project=None):
+def lemmatize_episodes(text: str, project=None):
     episodes = text.strip().splitlines()
     analyzed = []
 

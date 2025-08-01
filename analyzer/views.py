@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import Project, DictionaryTerm, Scenario
 from .forms import ProjectForm, ScenarioForm, DictionaryTermForm
 from django.shortcuts import redirect
-from .nlp import analyze_episodes
+from .nlp import lemmatize_episodes
 
 def project_list(request):
     projects = Project.objects.all()
@@ -14,7 +14,7 @@ def project_detail(request, pk):
 
     for scenario in scenarios:
         if scenario.episodes:
-            scenario.episodes_lemmas = analyze_episodes(scenario.episodes, project)
+            scenario.episodes_lemmas = lemmatize_episodes(scenario.episodes, project)
         else:
             scenario.episodes_lemmas = []
 
