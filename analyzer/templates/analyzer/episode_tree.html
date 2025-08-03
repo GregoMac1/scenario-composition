@@ -1,3 +1,5 @@
+{% extends "analyzer/layout.html" %}
+{% block content %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
@@ -21,6 +23,7 @@
     };
   </script>
   
-  <script type="module" src="{% static 'analyzer/graficarArbol.js' %}"></script>
+  <script type="module" src="{% static 'analyzer/episode-tree.js' %}"></script>
 </body>
 </html> 
+{% endblock %}
