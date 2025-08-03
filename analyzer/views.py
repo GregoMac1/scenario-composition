@@ -34,6 +34,20 @@ def create_project(request):
         form = ProjectForm()
     return render(request, 'analyzer/project_form.html', {'form': form})
 
+def edit_project(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    if request.method == 'POST':
+        form = ProjectForm(request.POST, instance=project)
+        if form.is_valid():
+            form.save()
+            return redirect('project_detail', pk=project.pk)
+    else:
+        form = ProjectForm(instance=project)
+    return render(request, 'analyzer/project_form.html', {
+        'form': form,
+        'project': project
+    })
+
 def create_scenario(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
 
