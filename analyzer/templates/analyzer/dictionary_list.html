@@ -1,33 +1,25 @@
 {% extends "analyzer/layout.html" %}
+{% block title %}Diccionario - {{ project.name }}{% endblock %}
 {% block content %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Diccionario - {{ project.name }}</title>
-</head>
-<body>
   <h1>Diccionario</h1>
   <p><strong>Proyecto:</strong> {{ project.name }}</p>
   
   <ul>
     {% for term in terms %}
-      <li>
+      <li class="card">
         <strong>{{ term.term }}</strong><br>
-        <a href="{% url 'edit_dictionary_term' project.id term.id %}">Editar</a><br>
-        Significado: {{ term.meaning }}<br>
+        <a href="{% url 'edit_dictionary_term' project.id term.id %}" class="btn btn-secondary">Editar</a><br>
+        <strong>Significado:</strong> {{ term.meaning }}<br>
         {% if term.synonyms %}
-          Sinónimos: {{ term.synonyms }}
+          <strong>Sinónimos:</strong> {{ term.synonyms }}
         {% endif %}
       </li>
     {% empty %}
-      <li>No hay términos en el diccionario.</li>
+      <li class="card">No hay términos en el diccionario.</li>
     {% endfor %}
   </ul>
   
-  <p><a href="{% url 'create_dictionary_term' project.id %}">+ Agregar nuevo término</a></p>
+  <p><a href="{% url 'create_dictionary_term' project.id %}" class="main-button">+ Agregar nuevo término</a></p>
   
-  <p><a href="{% url 'project_detail' project.id %}">← Volver al proyecto</a></p>
-</body>
-</html>
+  <p class="mt-3"><a href="{% url 'project_detail' project.id %}">← Volver al proyecto</a></p>
 {% endblock %}

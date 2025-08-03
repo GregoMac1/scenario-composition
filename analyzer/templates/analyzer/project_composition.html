@@ -1,53 +1,10 @@
 {% extends "analyzer/layout.html" %}
+{% block title %}Análisis de composición de Episodios - {{ project.name }}{% endblock %}
 {% block content %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Análisis de composición de Episodios - {{ project.name }}</title>
-  <style>
-    .scenario-section {
-      margin: 20px 0;
-      padding: 15px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      background-color: #f9f9f9;
-    }
-    .scenario-title {
-      font-size: 18px;
-      font-weight: bold;
-      color: #333;
-      margin-bottom: 10px;
-    }
-    .episode-item {
-      margin: 10px 0;
-      padding: 10px;
-      background-color: white;
-      border-left: 3px solid #007bff;
-    }
-    .episode-text {
-      font-weight: bold;
-      color: #333;
-    }
-    .composition-list {
-      margin-top: 5px;
-      color: #666;
-    }
-    .composition-item {
-      margin: 2px 0;
-      padding-left: 10px;
-    }
-    .no-composition {
-      color: #999;
-      font-style: italic;
-    }
-  </style>
-</head>
-<body>
   <h1>Análisis de composición de Episodios</h1>
   <h2>Proyecto: {{ project.name }}</h2>
   
-  <a href="{% url 'project_detail' project.id %}">← Volver al proyecto</a>
+  <p class="mb-3"><a href="{% url 'project_detail' project.id %}">← Volver al proyecto</a></p>
   
   {% if composition_analysis %}
     {% for analysis in composition_analysis %}
@@ -82,7 +39,5 @@
     <p>No se encontraron escenarios para el análisis.</p>
   {% endif %}
   
-  <a href="{% url 'project_detail' project.id %}">← Volver al proyecto</a>
-</body>
-</html> 
+  <p class="mt-3"><a href="{% url 'project_detail' project.id %}">← Volver al proyecto</a></p>
 {% endblock %}

@@ -1,20 +1,17 @@
 {% extends "analyzer/layout.html" %}
+{% block title %}Árbol de Episodios - {{ scenario.title }}{% endblock %}
 {% block content %}
-{% load static %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Árbol de Episodios - {{ scenario.title }}</title>
-</head>
-<body>
+  {% load static %}
+  
   <h1>Árbol de Episodios: {{ scenario.title }}</h1>
   <p><strong>Proyecto:</strong> {{ project.name }}</p>
-  <button class="btn btn-primary" id="exportar" onclick="exportar()">Exportar</button>
   
-  <a href="{% url 'project_detail' project.id %}">← Volver al proyecto</a>
+  <div class="mb-3">
+    <button class="btn btn-primary" id="exportar" onclick="exportar()">Exportar</button>
+    <a href="{% url 'project_detail' project.id %}" class="btn btn-secondary ml-2">← Volver al proyecto</a>
+  </div>
   
-  <div id="episode-tree-container"></div>
+  <div id="episode-tree-container" class="tree-container"></div>
 
   <script>
     // Pass the tree data to the global scope for the D3 script to access
@@ -24,6 +21,4 @@
   </script>
   
   <script type="module" src="{% static 'analyzer/episode-tree.js' %}"></script>
-</body>
-</html> 
 {% endblock %}

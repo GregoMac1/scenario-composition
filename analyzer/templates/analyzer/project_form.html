@@ -1,21 +1,13 @@
 {% extends "analyzer/layout.html" %}
+{% block title %}Crear Proyecto{% endblock %}
 {% block content %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Crear Proyecto</title>
-</head>
-<body>
   <h1>Crear Proyecto</h1>
   
-  <form method="post">
+  <form method="post" class="card">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Crear Proyecto</button>
+    <button type="submit" class="main-button">Crear Proyecto</button>
   </form>
   
-  <p><a href="{% url 'project_list' %}">← Volver a proyectos</a></p>
-</body>
-</html>
+  <p class="mt-3"><a href="{% url 'project_list' %}">← Volver a proyectos</a></p>
 {% endblock %}

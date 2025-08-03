@@ -1,76 +1,47 @@
 {% extends "analyzer/layout.html" %}
+{% block title %}{{ project.name }}{% endblock %}
 {% block content %}
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <title>{{ project.name }}</title>
-    <style>
-      .episode-original {
-        color: #666;
-        font-style: italic;
-      }
-      .episode-processed {
-        color: #000;
-        font-weight: bold;
-      }
-      .episode-container {
-        margin: 10px 0;
-        padding: 10px;
-        border-left: 3px solid #ccc;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>{{ project.name }}</h1>
-    <p>{{ project.description }}</p>
+  <h1>{{ project.name }}</h1>
+  <p>{{ project.description }}</p>
 
-    <h2>Escenarios</h2>
-    <p>
-      <a href="{% url 'create_scenario' project.id %}"
-        >+ Agregar nuevo escenario</a
-      >
-    </p>
-    <ul>
-      {% for scenario in scenarios %}
-      <li>
-        <strong>{{ scenario.title }}</strong><br />
-        <a href="{% url 'edit_scenario' project.id scenario.id %}">Editar</a> |
-        <a href="{% url 'episode_tree' project.id scenario.id %}"
-          >Ver Árbol de Episodios</a
-        ><br />
-        Objetivo: {{ scenario.goal }}<br />
-        Contexto: {{ scenario.context }}<br />
-        <strong>Episodios:</strong>
-        <div class="episode-container">
-          {% for episode in scenario.episodes.splitlines %}
-          {% if episode.strip %}
-          <div class="episode-original">Original: {{ episode }}</div>
-          {% endif %}
-          {% endfor %}
-          {% if scenario.episodes_lemmas %}
-          <div class="episode-processed">
-            Procesado: {{ scenario.episodes_lemmas|join:"<br />" }}
-          </div>
-          {% endif %}
+  <h2>Escenarios</h2>
+  <p>
+    <a href="{% url 'create_scenario' project.id %}" class="main-button">+ Agregar nuevo escenario</a>
+  </p>
+  <ul>
+    {% for scenario in scenarios %}
+    <li class="card">
+      <strong>{{ scenario.title }}</strong><br />
+      <a href="{% url 'edit_scenario' project.id scenario.id %}" class="btn btn-secondary">Editar</a>
+      <a href="{% url 'episode_tree' project.id scenario.id %}" class="btn btn-primary">Ver Árbol de Episodios</a><br />
+      <strong>Objetivo:</strong> {{ scenario.goal }}<br />
+      <strong>Contexto:</strong> {{ scenario.context }}<br />
+      <strong>Episodios:</strong>
+      <div class="episode-container">
+        {% for episode in scenario.episodes.splitlines %}
+        {% if episode.strip %}
+        <div class="episode-original">Original: {{ episode }}</div>
+        {% endif %}
+        {% endfor %}
+        {% if scenario.episodes_lemmas %}
+        <div class="episode-processed">
+          Procesado: {{ scenario.episodes_lemmas|join:"<br />" }}
         </div>
-      </li>
-      {% empty %}
-      <li>No hay escenarios para este proyecto.</li>
-      {% endfor %}
-    </ul>
+        {% endif %}
+      </div>
+    </li>
+    {% empty %}
+    <li class="card">No hay escenarios para este proyecto.</li>
+    {% endfor %}
+  </ul>
 
-    <h2>Diccionario</h2>
-    <p><a href="{% url 'dictionary_list' project.id %}">Ver diccionario</a></p>
+  <h2>Diccionario</h2>
+  <p><a href="{% url 'dictionary_list' project.id %}" class="btn btn-primary">Ver diccionario</a></p>
 
-    <h2>Composición de Episodios</h2>
-    <p>
-      <a href="{% url 'project_composition' project.id %}"
-        >Ver análisis de composición de episodios</a
-      >
-    </p>
+  <h2>Composición de Episodios</h2>
+  <p>
+    <a href="{% url 'project_composition' project.id %}" class="btn btn-primary">Ver análisis de composición de episodios</a>
+  </p>
 
-    <a href="{% url 'project_list' %}">← Volver a proyectos</a>
-  </body>
-</html>
+  <p class="mt-3"><a href="{% url 'project_list' %}">← Volver a proyectos</a></p>
 {% endblock %}

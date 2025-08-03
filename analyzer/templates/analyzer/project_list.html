@@ -1,26 +1,18 @@
 {% extends "analyzer/layout.html" %}
+{% block title %}Proyectos{% endblock %}
 {% block content %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Proyectos</title>
-</head>
-<body>
   <h1>Proyectos</h1>
   
   <ul>
     {% for project in projects %}
-      <li>
+      <li class="card">
         <a href="{% url 'project_detail' project.id %}">{{ project.name }}</a>
         <p>{{ project.description }}</p>
       </li>
     {% empty %}
-      <li>No hay proyectos disponibles.</li>
+      <li class="card">No hay proyectos disponibles.</li>
     {% endfor %}
   </ul>
   
-  <p><a href="{% url 'create_project' %}">+ Crear nuevo proyecto</a></p>
-</body>
-</html>
+  <p><a href="{% url 'create_project' %}" class="main-button">+ Crear nuevo proyecto</a></p>
 {% endblock %}
