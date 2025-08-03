@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Episode Composition - {{ project.name }}</title>
+  <style>
+    .scenario-section {
+      margin: 20px 0;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+    .scenario-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .episode-item {
+      margin: 10px 0;
+      padding: 10px;
+      background-color: white;
+      border-left: 3px solid #007bff;
+    }
+    .episode-text {
+      font-weight: bold;
+      color: #333;
+    }
+    .composition-list {
+      margin-top: 5px;
+      color: #666;
+    }
+    .composition-item {
+      margin: 2px 0;
+      padding-left: 10px;
+    }
+    .no-composition {
+      color: #999;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <h1>Episode Composition Analysis</h1>
+  <h2>Project: {{ project.name }}</h2>
+  
+  <a href="{% url 'project_detail' project.id %}">← Back to project</a>
+  
+  {% if composition_analysis %}
+    {% for analysis in composition_analysis %}
+      <div class="scenario-section">
+        <div class="scenario-title">{{ analysis.scenario.title }}</div>
+        
+        {% if analysis.episodes %}
+          {% for episode_data in analysis.episodes %}
+            <div class="episode-item">
+              <div class="episode-text">{{ episode_data.episode }}</div>
+              
+              {% if episode_data.composes_into %}
+                <div class="composition-list">
+                  <strong>Composes into:</strong>
+                  {% for scenario_title in episode_data.composes_into %}
+                    <div class="composition-item">• {{ scenario_title }}</div>
+                  {% endfor %}
+                </div>
+              {% else %}
+                <div class="composition-list">
+                  <span class="no-composition">No composition found</span>
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% else %}
+          <p>No episodes found for this scenario.</p>
+        {% endif %}
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>No scenarios found for analysis.</p>
+  {% endif %}
+
+  <a href="{% url 'project_detail' project.id %}">← Back to project</a>
+</body>
+</html> 

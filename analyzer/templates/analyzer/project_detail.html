@@ -19,7 +19,8 @@
     {% for scenario in scenarios %}
       <li>
         <strong>{{ scenario.title }}</strong><br>
-        <a href="{% url 'edit_scenario' project.id scenario.id %}">Edit</a>
+        <a href="{% url 'edit_scenario' project.id scenario.id %}">Edit</a> | 
+        <a href="{% url 'episode_tree' project.id scenario.id %}">View Episode Tree</a><br>
         Goal: {{ scenario.goal }}<br>
         Context: {{ scenario.context }}<br>
         <strong>Episodes:</strong>
@@ -41,6 +42,9 @@
 
   <h2>Dictionary</h2>
   <p><a href="{% url 'dictionary_list' project.id %}">View dictionary</a></p>
+
+  <h2>Episode Composition</h2>
+  <p><a href="{% url 'project_composition' project.id %}">View episode composition analysis</a></p>
 
   <a href="{% url 'project_list' %}">← Back to projects</a>
 </body>

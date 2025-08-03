@@ -3,14 +3,14 @@ from spacy.matcher import Matcher
 
 nlp = es_dep_news_trf.load()
 
-def build_lemma_matcher(replacements):
+def build_lemma_matcher(replacements) -> Matcher:
     matcher = Matcher(nlp.vocab)
     for key in replacements.keys():
         lemma_pattern = [{"LEMMA": lemma} for lemma in key.split()]
         matcher.add(key, [lemma_pattern])
     return matcher
 
-def replace_lemmas_with_matcher(text, replacements):
+def replace_lemmas_with_matcher(text, replacements) -> str:
     doc = nlp(text)
     matcher = build_lemma_matcher(replacements)
 
@@ -31,7 +31,7 @@ def replace_lemmas_with_matcher(text, replacements):
 
     return " ".join(replaced)
 
-def lemmatize_episodes(text: str, project=None):
+def lemmatize_episodes(text: str, project=None) -> list[str]:
     episodes = text.strip().splitlines()
     analyzed = []
 
@@ -53,3 +53,23 @@ def lemmatize_episodes(text: str, project=None):
         analyzed.append(replaced_text)
 
     return analyzed
+
+def get_infinitive_sentence(sentence) -> str:
+    lemmas = []
+    for token in nlp(sentence):
+        if token.dep_ == "nsubj":
+            continue
+        if token.pos_ == "VERB":
+            lemmas.append(token.lemma_)
+        elif token.pos_ != "DET" and token.pos_ != "PUNCT":
+            lemmas.append(token.text)
+    return " ".join(lemmas)
+
+def are_sentences_equivalent(sentence1, sentence2) -> bool:
+    """
+    Check if two sentences are semantically equivalent.
+    Uses spaCy's similarity method with a threshold of 0.9.
+    """
+    doc1 = nlp(get_infinitive_sentence(sentence1))
+    doc2 = nlp(get_infinitive_sentence(sentence2))
+    return doc1.similarity(doc2) > 0.9

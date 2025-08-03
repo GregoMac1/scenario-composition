@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Episode Tree - {{ scenario.title }}</title>
+</head>
+<body>
+  <h1>Episode Tree: {{ scenario.title }}</h1>
+  <p><strong>Project:</strong> {{ project.name }}</p>
+  <button class="btn btn-primary" id="exportar" onclick="exportar()">Exportar</button>
+  
+  <div class="back-link">
+    <a href="{% url 'project_detail' project.id %}">← Back to project</a>
+  </div>
+  
+  <div id="episode-tree-container"></div>
+
+  <script>
+    // Pass the tree data to the global scope for the D3 script to access
+    window.scenario = {
+      value: '{{ tree_data|escapejs }}'
+    };
+  </script>
+  
+  <script type="module" src="{% static 'analyzer/graficarArbol.js' %}"></script>
+</body>
+</html> 
