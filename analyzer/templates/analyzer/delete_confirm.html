@@ -14,7 +14,7 @@
       {% if cancel_url == 'project_detail' %}
         <a href="{% url cancel_url pk=object.id %}" class="btn btn-secondary">Cancelar</a>
       {% elif cancel_url == 'dictionary_list' %}
-        <a href="{% url cancel_url project_id=object.project.id %}" class="btn btn-secondary">Cancelar</a>
+        <a href="{% url cancel_url project_id=object.project.pk %}" class="btn btn-secondary">Cancelar</a>
       {% endif %}
     </form>
   </div>
