@@ -3,15 +3,16 @@ from .models import Project, DictionaryTerm, Scenario
 from .forms import ProjectForm, ScenarioForm, DictionaryTermForm
 from django.shortcuts import redirect
 from .nlp import lemmatize_episodes, are_sentences_equivalent
+from django.utils import timezone
 import json
 
 def project_list(request):
-    projects = Project.objects.all()
+    projects = Project.objects.filter(deleted_at__isnull=True)
     return render(request, 'analyzer/project_list.html', {'projects': projects})
 
 def project_detail(request, pk):
-    project = get_object_or_404(Project, pk=pk)
-    scenarios = project.scenarios.all()
+    project = get_object_or_404(Project, pk=pk, deleted_at__isnull=True)
+    scenarios = project.scenarios.filter(deleted_at__isnull=True)
 
     for scenario in scenarios:
         if scenario.episodes:
@@ -35,7 +36,7 @@ def create_project(request):
     return render(request, 'analyzer/project_form.html', {'form': form})
 
 def edit_project(request, project_id):
-    project = get_object_or_404(Project, pk=project_id)
+    project = get_object_or_404(Project, pk=project_id, deleted_at__isnull=True)
     if request.method == 'POST':
         form = ProjectForm(request.POST, instance=project)
         if form.is_valid():
@@ -48,8 +49,20 @@ def edit_project(request, project_id):
         'project': project
     })
 
+def delete_project(request, project_id):
+    project = get_object_or_404(Project, pk=project_id, deleted_at__isnull=True)
+    if request.method == 'POST':
+        project.deleted_at = timezone.now()
+        project.save()
+        return redirect('project_list')
+    return render(request, 'analyzer/delete_confirm.html', {
+        'object': project,
+        'object_type': 'proyecto',
+        'cancel_url': 'project_detail'
+    })
+
 def create_scenario(request, project_id):
-    project = get_object_or_404(Project, pk=project_id)
+    project = get_object_or_404(Project, pk=project_id, deleted_at__isnull=True)
 
     if request.method == 'POST':
         form = ScenarioForm(request.POST)
@@ -68,8 +81,8 @@ def create_scenario(request, project_id):
     })
 
 def edit_scenario(request, project_id, scenario_id):
-    project = get_object_or_404(Project, pk=project_id)
-    scenario = get_object_or_404(Scenario, pk=scenario_id, project=project)
+    project = get_object_or_404(Project, pk=project_id, deleted_at__isnull=True)
+    scenario = get_object_or_404(Scenario, pk=scenario_id, project=project, deleted_at__isnull=True)
     if request.method == 'POST':
         form = ScenarioForm(request.POST, instance=scenario)
         if form.is_valid():
@@ -83,16 +96,29 @@ def edit_scenario(request, project_id, scenario_id):
         'scenario': scenario
     })
 
+def delete_scenario(request, project_id, scenario_id):
+    project = get_object_or_404(Project, pk=project_id, deleted_at__isnull=True)
+    scenario = get_object_or_404(Scenario, pk=scenario_id, project=project, deleted_at__isnull=True)
+    if request.method == 'POST':
+        scenario.deleted_at = timezone.now()
+        scenario.save()
+        return redirect('project_detail', pk=project.pk)
+    return render(request, 'analyzer/delete_confirm.html', {
+        'object': scenario,
+        'object_type': 'escenario',
+        'cancel_url': 'project_detail'
+    })
+
 def dictionary_list(request, project_id):
-    project = get_object_or_404(Project, pk=project_id)
-    terms = project.dictionary_terms.all()
+    project = get_object_or_404(Project, pk=project_id, deleted_at__isnull=True)
+    terms = project.dictionary_terms.filter(deleted_at__isnull=True)
     return render(request, 'analyzer/dictionary_list.html', {
         'project': project,
         'terms': terms
     })
 
 def create_dictionary_term(request, project_id):
-    project = get_object_or_404(Project, pk=project_id)
+    project = get_object_or_404(Project, pk=project_id, deleted_at__isnull=True)
     if request.method == 'POST':
         form = DictionaryTermForm(request.POST)
         if form.is_valid():
@@ -108,8 +134,8 @@ def create_dictionary_term(request, project_id):
     })
 
 def edit_dictionary_term(request, project_id, term_id):
-    project = get_object_or_404(Project, pk=project_id)
-    term = get_object_or_404(DictionaryTerm, pk=term_id, project=project)
+    project = get_object_or_404(Project, pk=project_id, deleted_at__isnull=True)
+    term = get_object_or_404(DictionaryTerm, pk=term_id, project=project, deleted_at__isnull=True)
     if request.method == 'POST':
         form = DictionaryTermForm(request.POST, instance=term)
         if form.is_valid():
@@ -121,6 +147,19 @@ def edit_dictionary_term(request, project_id, term_id):
         'form': form,
         'project': project,
         'term': term
+    })
+
+def delete_dictionary_term(request, project_id, term_id):
+    project = get_object_or_404(Project, pk=project_id, deleted_at__isnull=True)
+    term = get_object_or_404(DictionaryTerm, pk=term_id, project=project, deleted_at__isnull=True)
+    if request.method == 'POST':
+        term.deleted_at = timezone.now()
+        term.save()
+        return redirect('dictionary_list', project_id=project.pk)
+    return render(request, 'analyzer/delete_confirm.html', {
+        'object': term,
+        'object_type': 'término del diccionario',
+        'cancel_url': 'dictionary_list'
     })
 
 def process_episode(episode, scenarios):

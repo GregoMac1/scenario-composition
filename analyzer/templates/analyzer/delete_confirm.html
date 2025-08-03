@@ -1,0 +1,21 @@
+{% extends "analyzer/layout.html" %}
+{% block title %}Eliminar {{ object_type }}{% endblock %}
+{% block content %}
+  <h1>Eliminar {{ object_type }}</h1>
+  
+  <div class="card">
+    <p><strong>¿Estás seguro de que quieres eliminar el {{ object_type }}?</strong></p>
+    
+    <p>Esta acción no se puede deshacer. El {{ object_type }} será marcado como eliminado pero permanecerá en la base de datos.</p>
+    
+    <form method="post" class="mt-3">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Eliminar</button>
+      {% if cancel_url == 'project_detail' %}
+        <a href="{% url cancel_url pk=object.id %}" class="btn btn-secondary">Cancelar</a>
+      {% elif cancel_url == 'dictionary_list' %}
+        <a href="{% url cancel_url project_id=object.project.id %}" class="btn btn-secondary">Cancelar</a>
+      {% endif %}
+    </form>
+  </div>
+{% endblock %} 

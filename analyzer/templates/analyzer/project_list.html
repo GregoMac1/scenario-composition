@@ -8,7 +8,10 @@
       <li class="card">
         <a href="{% url 'project_detail' project.id %}">{{ project.name }}</a>
         <p>{{ project.description }}</p>
-        <a href="{% url 'edit_project' project.id %}" class="btn btn-secondary">Editar</a>
+        <div class="mt-2">
+          <a href="{% url 'edit_project' project.id %}" class="btn btn-secondary">Editar</a>
+          <a href="{% url 'delete_project' project.id %}" class="btn btn-danger">Eliminar</a>
+        </div>
       </li>
     {% empty %}
       <li class="card">No hay proyectos disponibles.</li>

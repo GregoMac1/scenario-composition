@@ -8,7 +8,10 @@
     {% for term in terms %}
       <li class="card">
         <strong>{{ term.term }}</strong><br>
-        <a href="{% url 'edit_dictionary_term' project.id term.id %}" class="btn btn-secondary">Editar</a><br>
+        <div class="mt-2">
+          <a href="{% url 'edit_dictionary_term' project.id term.id %}" class="btn btn-secondary">Editar</a>
+          <a href="{% url 'delete_dictionary_term' project.id term.id %}" class="btn btn-danger">Eliminar</a>
+        </div><br>
         <strong>Significado:</strong> {{ term.meaning }}<br>
         {% if term.synonyms %}
           <strong>Sinónimos:</strong> {{ term.synonyms }}

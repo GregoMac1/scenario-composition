@@ -4,6 +4,7 @@ class Project(models.Model):
     name = models.CharField(max_length=200, verbose_name="Nombre")
     description = models.TextField(blank=True, verbose_name="Descripción")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
+    deleted_at = models.DateTimeField(null=True, blank=True, verbose_name="Fecha de eliminación")
 
     def __str__(self):
         return self.name
@@ -21,6 +22,7 @@ class Scenario(models.Model):
     resources = models.TextField(help_text="Lista separada por comas", verbose_name="Recursos")
     episodes = models.TextField(help_text="Una acción por línea", verbose_name="Episodios")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
+    deleted_at = models.DateTimeField(null=True, blank=True, verbose_name="Fecha de eliminación")
 
     def __str__(self):
         return self.title
@@ -34,6 +36,7 @@ class DictionaryTerm(models.Model):
     term = models.CharField(max_length=100, verbose_name="Término")
     meaning = models.TextField(verbose_name="Significado")
     synonyms = models.TextField(blank=True, help_text="Lista separada por comas", verbose_name="Sinónimos")
+    deleted_at = models.DateTimeField(null=True, blank=True, verbose_name="Fecha de eliminación")
 
     def __str__(self):
         return self.term
