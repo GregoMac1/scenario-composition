@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Episode Composition - {{ project.name }}</title>
+  <title>Análisis de composición de Episodios - {{ project.name }}</title>
   <style>
     .scenario-section {
       margin: 20px 0;
@@ -42,10 +42,10 @@
   </style>
 </head>
 <body>
-  <h1>Episode Composition Analysis</h1>
-  <h2>Project: {{ project.name }}</h2>
+  <h1>Análisis de composición de Episodios</h1>
+  <h2>Proyecto: {{ project.name }}</h2>
   
-  <a href="{% url 'project_detail' project.id %}">← Back to project</a>
+  <a href="{% url 'project_detail' project.id %}">← Volver al proyecto</a>
   
   {% if composition_analysis %}
     {% for analysis in composition_analysis %}
@@ -59,27 +59,27 @@
               
               {% if episode_data.composes_into %}
                 <div class="composition-list">
-                  <strong>Composes into:</strong>
+                  <strong>Se compone en:</strong>
                   {% for scenario_title in episode_data.composes_into %}
                     <div class="composition-item">• {{ scenario_title }}</div>
                   {% endfor %}
                 </div>
               {% else %}
                 <div class="composition-list">
-                  <span class="no-composition">No composition found</span>
+                  <span class="no-composition">No se encontró composición</span>
                 </div>
               {% endif %}
             </div>
           {% endfor %}
         {% else %}
-          <p>No episodes found for this scenario.</p>
+          <p>No se encontraron episodios para este escenario.</p>
         {% endif %}
       </div>
     {% endfor %}
   {% else %}
-    <p>No scenarios found for analysis.</p>
+    <p>No se encontraron escenarios para el análisis.</p>
   {% endif %}
-
-  <a href="{% url 'project_detail' project.id %}">← Back to project</a>
+  
+  <a href="{% url 'project_detail' project.id %}">← Volver al proyecto</a>
 </body>
 </html> 

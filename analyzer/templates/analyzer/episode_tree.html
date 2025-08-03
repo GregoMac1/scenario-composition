@@ -1,18 +1,16 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Episode Tree - {{ scenario.title }}</title>
+  <title>Árbol de Episodios - {{ scenario.title }}</title>
 </head>
 <body>
-  <h1>Episode Tree: {{ scenario.title }}</h1>
-  <p><strong>Project:</strong> {{ project.name }}</p>
+  <h1>Árbol de Episodios: {{ scenario.title }}</h1>
+  <p><strong>Proyecto:</strong> {{ project.name }}</p>
   <button class="btn btn-primary" id="exportar" onclick="exportar()">Exportar</button>
   
-  <div class="back-link">
-    <a href="{% url 'project_detail' project.id %}">← Back to project</a>
-  </div>
+  <a href="{% url 'project_detail' project.id %}">← Volver al proyecto</a>
   
   <div id="episode-tree-container"></div>
 

@@ -1,22 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Create Scenario</title>
+  <title>{% if scenario %}Editar Escenario{% else %}Crear Escenario{% endif %}</title>
 </head>
 <body>
-  <h1>
-    {% if scenario %}Edit{% else %}Create{% endif %} Scenario for "{{ project.name }}"
-  </h1>
-
+  <h1>{% if scenario %}Editar Escenario{% else %}Crear Escenario{% endif %}</h1>
+  <p><strong>Proyecto:</strong> {{ project.name }}</p>
+  
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">
-      {% if scenario %}Save{% else %}Create{% endif %} Scenario
-    </button>
+    <button type="submit">{% if scenario %}Guardar Cambios{% else %}Crear Escenario{% endif %}</button>
   </form>
-
-  <a href="{% url 'project_detail' project.pk %}">← Back to project</a>
+  
+  <p><a href="{% url 'project_detail' project.id %}">← Volver al proyecto</a></p>
 </body>
 </html>

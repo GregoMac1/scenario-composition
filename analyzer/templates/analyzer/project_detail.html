@@ -1,51 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>{{ project.name }}</title>
-  <style>
-    .episode-original { color: #666; font-style: italic; }
-    .episode-processed { color: #000; font-weight: bold; }
-    .episode-container { margin: 10px 0; padding: 10px; border-left: 3px solid #ccc; }
-  </style>
-</head>
-<body>
-  <h1>{{ project.name }}</h1>
-  <p>{{ project.description }}</p>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{{ project.name }}</title>
+    <style>
+      .episode-original {
+        color: #666;
+        font-style: italic;
+      }
+      .episode-processed {
+        color: #000;
+        font-weight: bold;
+      }
+      .episode-container {
+        margin: 10px 0;
+        padding: 10px;
+        border-left: 3px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>{{ project.name }}</h1>
+    <p>{{ project.description }}</p>
 
-  <h2>Scenarios</h2>
-  <p><a href="{% url 'create_scenario' project.id %}">+ Add new scenario</a></p>
-  <ul>
-    {% for scenario in scenarios %}
+    <h2>Escenarios</h2>
+    <p>
+      <a href="{% url 'create_scenario' project.id %}"
+        >+ Agregar nuevo escenario</a
+      >
+    </p>
+    <ul>
+      {% for scenario in scenarios %}
       <li>
-        <strong>{{ scenario.title }}</strong><br>
-        <a href="{% url 'edit_scenario' project.id scenario.id %}">Edit</a> | 
-        <a href="{% url 'episode_tree' project.id scenario.id %}">View Episode Tree</a><br>
-        Goal: {{ scenario.goal }}<br>
-        Context: {{ scenario.context }}<br>
-        <strong>Episodes:</strong>
+        <strong>{{ scenario.title }}</strong><br />
+        <a href="{% url 'edit_scenario' project.id scenario.id %}">Editar</a> |
+        <a href="{% url 'episode_tree' project.id scenario.id %}"
+          >Ver Árbol de Episodios</a
+        ><br />
+        Objetivo: {{ scenario.goal }}<br />
+        Contexto: {{ scenario.context }}<br />
+        <strong>Episodios:</strong>
         <div class="episode-container">
           {% for episode in scenario.episodes.splitlines %}
-            {% if episode.strip %}
-              <div class="episode-original">Original: {{ episode }}</div>
-            {% endif %}
+          {% if episode.strip %}
+          <div class="episode-original">Original: {{ episode }}</div>
+          {% endif %}
           {% endfor %}
           {% if scenario.episodes_lemmas %}
-            <div class="episode-processed">Processed: {{ scenario.episodes_lemmas|join:"<br>" }}</div>
+          <div class="episode-processed">
+            Procesado: {{ scenario.episodes_lemmas|join:"<br />" }}
+          </div>
           {% endif %}
         </div>
       </li>
-    {% empty %}
-      <li>No scenarios for this project.</li>
-    {% endfor %}
-  </ul>
+      {% empty %}
+      <li>No hay escenarios para este proyecto.</li>
+      {% endfor %}
+    </ul>
 
-  <h2>Dictionary</h2>
-  <p><a href="{% url 'dictionary_list' project.id %}">View dictionary</a></p>
+    <h2>Diccionario</h2>
+    <p><a href="{% url 'dictionary_list' project.id %}">Ver diccionario</a></p>
 
-  <h2>Episode Composition</h2>
-  <p><a href="{% url 'project_composition' project.id %}">View episode composition analysis</a></p>
+    <h2>Composición de Episodios</h2>
+    <p>
+      <a href="{% url 'project_composition' project.id %}"
+        >Ver análisis de composición de episodios</a
+      >
+    </p>
 
-  <a href="{% url 'project_list' %}">← Back to projects</a>
-</body>
+    <a href="{% url 'project_list' %}">← Volver a proyectos</a>
+  </body>
 </html>

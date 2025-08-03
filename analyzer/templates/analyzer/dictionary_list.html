@@ -1,27 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>Dictionary - {{ project.name }}</title>
+  <meta charset="UTF-8">
+  <title>Diccionario - {{ project.name }}</title>
 </head>
 <body>
-  <h1>Dictionary for "{{ project.name }}"</h1>
-
-  <a href="{% url 'create_dictionary_term' project.id %}">+ Add new term</a>
+  <h1>Diccionario</h1>
+  <p><strong>Proyecto:</strong> {{ project.name }}</p>
+  
   <ul>
     {% for term in terms %}
       <li>
-        <strong>{{ term.term }}</strong> — {{ term.meaning }}
+        <strong>{{ term.term }}</strong><br>
+        <a href="{% url 'edit_dictionary_term' project.id term.id %}">Editar</a><br>
+        Significado: {{ term.meaning }}<br>
         {% if term.synonyms %}
-          (Synonyms: {{ term.synonyms }})
+          Sinónimos: {{ term.synonyms }}
         {% endif %}
-        — <a href="{% url 'edit_dictionary_term' project.id term.id %}">Edit</a>
       </li>
     {% empty %}
-      <li>No dictionary terms defined.</li>
+      <li>No hay términos en el diccionario.</li>
     {% endfor %}
   </ul>
-
-  <a href="{% url 'project_detail' project.id %}">← Back to project</a>
+  
+  <p><a href="{% url 'create_dictionary_term' project.id %}">+ Agregar nuevo término</a></p>
+  
+  <p><a href="{% url 'project_detail' project.id %}">← Volver al proyecto</a></p>
 </body>
 </html>

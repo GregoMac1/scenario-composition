@@ -1,21 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Projects</title>
+  <title>Proyectos</title>
 </head>
 <body>
-  <h1>Projects</h1>
-  <p><a href="{% url 'create_project' %}">+ Add new project</a></p>
+  <h1>Proyectos</h1>
+  
   <ul>
     {% for project in projects %}
       <li>
-        <a href="{% url 'project_detail' project.pk %}">{{ project.name }}</a>
+        <a href="{% url 'project_detail' project.id %}">{{ project.name }}</a>
         <p>{{ project.description }}</p>
       </li>
     {% empty %}
-      <li>No projects found.</li>
+      <li>No hay proyectos disponibles.</li>
     {% endfor %}
   </ul>
+  
+  <p><a href="{% url 'create_project' %}">+ Crear nuevo proyecto</a></p>
 </body>
 </html>

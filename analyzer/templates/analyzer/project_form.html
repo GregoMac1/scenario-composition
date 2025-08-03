@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Create Project</title>
+  <title>Crear Proyecto</title>
 </head>
 <body>
-  <h1>Create New Project</h1>
-
+  <h1>Crear Proyecto</h1>
+  
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Create</button>
+    <button type="submit">Crear Proyecto</button>
   </form>
-
-  <a href="{% url 'project_list' %}">← Back to projects</a>
+  
+  <p><a href="{% url 'project_list' %}">← Volver a proyectos</a></p>
 </body>
 </html>
