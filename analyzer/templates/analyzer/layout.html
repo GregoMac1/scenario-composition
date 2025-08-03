@@ -2,14 +2,13 @@
 <html lang="en" data-theme="system">
 <head>
   <meta charset="UTF-8" />
-  <title>{% block title %}Requirement App{% endblock %}</title>
+  <title>{% block title %}Composición de Escenarios{% endblock %}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   {% load static %}
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="{% static 'analyzer/styles.css' %}">
 
   <script>
-    // Aplica la preferencia de tema guardada o la del sistema
     const savedTheme = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
@@ -25,10 +24,9 @@
 
 <body class="min-h-screen flex flex-col transition-colors duration-300">
 
-  <!-- Header -->
   <header class="shadow" style="background-color: var(--color-primary); color: white;">
     <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-      <h1 class="text-2xl font-semibold">Requirement App</h1>
+      <h1 class="text-2xl font-semibold">Composición de Escenarios</h1>
       <div class="space-x-2">
         <button onclick="setTheme('light')" class="text-sm underline">Light</button>
         <button onclick="setTheme('dark')" class="text-sm underline">Dark</button>
@@ -37,17 +35,14 @@
     </div>
   </header>
 
-  <!-- Main content -->
   <main class="flex-grow container mx-auto px-4 py-8">
     {% block content %}{% endblock %}
   </main>
 
-  <!-- Footer -->
   <footer class="border-t text-sm text-center py-4 text-gray-500">
-    © 2025 - Requirement App
+    2025 - Composición de Escenarios
   </footer>
 
-  <!-- Script para cambiar el tema -->
   <script>
     function setTheme(theme) {
       localStorage.setItem('theme', theme);
